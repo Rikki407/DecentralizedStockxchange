@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coursetro Smart Contract</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1>Coursetro Instructor</h1>
+
+        <h2 id="instructor"></h2>
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+        <label for="name" class="col-lg-2 control-label">Instructor Name</label>
+        <input id="name" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Instructor Age</label>
+        <input id="age" type="text">
+
+        <button id="button">Update Instructor</button>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+
+           web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+
+
+       web3.eth.defaultAccount = web3.eth.accounts[5];
+
+       var CoursetroContract = web3.eth.contract([
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "units_of_shares",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "uint256"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "share_worth",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "uint256"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "share_name",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "bytes16"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "adrs_buyer",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "address"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "adrs_company",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "address"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "adrs_seller",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "address"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "get_user_details",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "bytes16[]"
+                   },
+                   {
+                       "name": "",
+                       "type": "uint256[]"
+                   },
+                   {
+                       "name": "",
+                       "type": "uint256[]"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "contract_money",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "uint256"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "constant": true,
+               "inputs": [],
+               "name": "current_user",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "uint8"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "view",
+               "type": "function"
+           },
+           {
+               "inputs": [],
+               "payable": false,
+               "stateMutability": "nonpayable",
+               "type": "constructor"
+           },
+           {
+               "constant": false,
+               "inputs": [],
+               "name": "add_shares_to_market",
+               "outputs": [],
+               "payable": false,
+               "stateMutability": "nonpayable",
+               "type": "function"
+           },
+           {
+               "constant": false,
+               "inputs": [],
+               "name": "add_shares_to_user",
+               "outputs": [],
+               "payable": false,
+               "stateMutability": "nonpayable",
+               "type": "function"
+           },
+           {
+               "constant": false,
+               "inputs": [],
+               "name": "set_user_details",
+               "outputs": [],
+               "payable": false,
+               "stateMutability": "nonpayable",
+               "type": "function"
+           },
+           {
+               "constant": false,
+               "inputs": [],
+               "name": "set_market_details",
+               "outputs": [],
+               "payable": false,
+               "stateMutability": "nonpayable",
+               "type": "function"
+           },
+           {
+               "constant": false,
+               "inputs": [
+                   {
+                       "name": "_name",
+                       "type": "bytes16"
+                   },
+                   {
+                       "name": "_units",
+                       "type": "uint256"
+                   },
+                   {
+                       "name": "_price",
+                       "type": "uint256"
+                   }
+               ],
+               "name": "sell_shares",
+               "outputs": [],
+               "payable": false,
+               "stateMutability": "nonpayable",
+               "type": "function"
+           },
+           {
+               "constant": false,
+               "inputs": [
+                   {
+                       "name": "_name",
+                       "type": "bytes16"
+                   },
+                   {
+                       "name": "_units",
+                       "type": "uint256"
+                   }
+               ],
+               "name": "buy_shares",
+               "outputs": [],
+               "payable": true,
+               "stateMutability": "payable",
+               "type": "function"
+           },
+           {
+               "constant": false,
+               "inputs": [],
+               "name": "get_market_details",
+               "outputs": [
+                   {
+                       "name": "",
+                       "type": "bytes16[]"
+                   },
+                   {
+                       "name": "",
+                       "type": "uint256[]"
+                   },
+                   {
+                       "name": "",
+                       "type": "uint256[]"
+                   }
+               ],
+               "payable": false,
+               "stateMutability": "nonpayable",
+               "type": "function"
+           },
+           {
+               "constant": false,
+               "inputs": [
+                   {
+                       "name": "cu_id",
+                       "type": "uint256"
+                   }
+               ],
+               "name": "typeOfUser",
+               "outputs": [],
+               "payable": false,
+               "stateMutability": "nonpayable",
+               "type": "function"
+           },
+           {
+               "anonymous": false,
+               "inputs": [
+                   {
+                       "indexed": false,
+                       "name": "_n",
+                       "type": "bytes16[]"
+                   },
+                   {
+                       "indexed": false,
+                       "name": "_num",
+                       "type": "uint256[]"
+                   },
+                   {
+                       "indexed": false,
+                       "name": "_pri",
+                       "type": "uint256[]"
+                   }
+               ],
+               "name": "get_called",
+               "type": "event"
+           }
+       ]);
+
+       var Coursetro = CoursetroContract.at('0x973c29bf6b6190ed44742096da86d774bd883d34');
+    console.log(Coursetro);
+       var get_called = Coursetro.get_called();
+       get_called.watch(function(error, result) {
+           if (!error) {
+               $("#loader").hide();
+               console.log(result.args._n);
+               console.log(web3.toASCII(result.args._n[0]));
+               $("#instructor").html("jdemjnkc");
+           } else {
+                $("#loader").hide();
+           }
+       });
+       Coursetro.buy_shares("Google",20);
+
+       $("#button").click(function() {
+            $("#loader").show();
+           Coursetro.setInstructor($("#name").val(), $("#age").val());
+       });
+
+    </script>
+
+</body>
+</html>
